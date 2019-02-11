@@ -1,0 +1,46 @@
+{% extends "bash.html" %}
+{% load i18n %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <body class="bg-dark">
+    <div class="container">
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header">Login</div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="login-box">
+                        <div class="login-box-body">
+                            <div class="form-group has-feedback">
+                                <input type="text" name="username" class="form-control" placeholder="Username">
+                                {{ obj.errors.username.0 }}
+                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="password" name="password" class="form-control" placeholder="Password">
+                                {{ obj.errors.password.0 }}
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                            <div class="form-group has-feedback">
+                                <input type="text" name="checkcode" placeholder="Verify code">
+                                {{ err_checkcode }}
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                <img src="checkcode" onclick="chageCheckcode(this)">
+                            </div>
+                        </div>
+                    </div>
+                    <input class="btn btn-primary btn-block" type="submit" value="Login">
+                    <script>
+                        function chageCheckcode(ths) {
+                            console.log(ths.src)
+                            ths.src = ths.src + '?'
+                        }
+
+                    </script>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+
+{% endblock %}
