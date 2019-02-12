@@ -25,6 +25,7 @@
       <list>
         <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/appadmin/templates" />
+        <option value="$MODULE_DIR$/cmdb/templates" />
       </list>
     </option>
   </component>
