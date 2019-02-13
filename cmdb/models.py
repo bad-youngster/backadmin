@@ -41,6 +41,30 @@ class UserProfile(models.Model):
     class Meta:
         verbose_name_plural = "管理用户"
 
+class UserGroup(models.Model):
+    '''
+    一级管理
+    二级管理
+    三级管理
+    '''
+    name = models.CharField(max_length=32)
+    primary_mana = models.CharField(max_length=32)
+    secondary_mana = models.CharField(max_length=32)
+    three_mana = models.CharField(max_length=32)
+    create_at = models.DateTimeField(blank=True,auto_now_add=True)
+
+    def __unicode__(self):
+        return self.name
+    class Meta:
+        verbose_name_plural = "用户组"
+
+class Tag(models.Model):
+    tag = models.CharField(max_length=32)
+
+    def __unicode__(self):
+        return self.tag
+    class Meta:
+        verbose_name_plural = "标签"
 
 class Asset(models.Model):
     '''资产总表'''
@@ -52,12 +76,12 @@ class Asset(models.Model):
     create_at = models.DateTimeField(blank=True, auto_now_add=True)
     update_at = models.DateTimeField(blank=True, auto_created=True)
     idc = models.ForeignKey('IDC', verbose_name=u'IDC机房', null=True, blank=True, on_delete=models.CASCADE)
-    contract = models.ForeignKey('Contract', verbose_name=u'合同', null=True, blank=True)
+    contract = models.ForeignKey('Contract', verbose_name=u'合同', null=True, blank=True,on_delete=models.CASCADE)
     trade_date = models.DateField(u'购买时间', null=True, blank=True)
     expire_date = models.DateField(u'过保修期', null=True, blank=True)
     price = models.FloatField(u'价格', null=True, blank=True)
-    business_unit = models.ForeignKey('BusinessUnit', verbose_name=u'属于的业务线', null=True, blank=True)
-    manage_user = models.ForeignKey('UserProfile', verbose_name=u'管理员', related_name='+', null=True, blank=True)
+    business_unit = models.ForeignKey('BusinessUnit', verbose_name=u'属于的业务线', null=True, blank=True,on_delete=models.CASCADE)
+    manage_user = models.ForeignKey('UserProfile', verbose_name=u'管理员', related_name='+', null=True, blank=True,on_delete=models.CASCADE)
     tag = models.ManyToManyField('Tag', null=True, blank=True)
     latest_date = models.DateField(null=True, blank=True)
 
@@ -83,12 +107,12 @@ class Server_Type(models.Model):
 
 class Server(models.Model):
     '''服务器信息'''
-    asset = models.OneToOneField('Asset')
-    sub_asset_type = models.ForeignKey('Server_Type')
+    asset = models.OneToOneField('Asset',on_delete=models.CASCADE)
+    sub_asset_type = models.ForeignKey('Server_Type',on_delete=models.CASCADE)
     hostname = models.CharField(max_length=128, blank=True, null=True)
     salt_name = models.CharField(max_length=128, blank=True, null=True)
     hosted_on = models.ForeignKey('self', related_name='hosted_on_server', blank=True, null=True,
-                                  verbose_name=u'宿主机')  # 虚拟机关联宿主机
+                                  verbose_name=u'宿主机',on_delete=models.CASCADE)  # 虚拟机关联宿主机
     service_sn = models.CharField(u'快速服务编码', max_length=128, blank=True, null=True)
     sn = models.CharField(u'SN号', max_length=64, blank=True, null=True, unique=True)
     manufactory = models.CharField(verbose_name=u'制造商', max_length=128, null=True, blank=True)
@@ -115,7 +139,7 @@ class Server(models.Model):
 
 class NetworkDevice(models.Model):
     '''网络设备'''
-    asset = models.OneToOneField('Asset')
+    asset = models.OneToOneField('Asset',on_delete=models.CASCADE)
     sub_assset_type_choices = ((0, '路由器'), (1, '交换机'), (2, '无线AP'), (3, 'VPN设备'),)
     sub_asset_type = models.SmallIntegerField(choices=sub_assset_type_choices, verbose_name="设备类型", default=0)
     management_ip = models.CharField(u'管理IP', max_length=64, blank=True, null=True)
@@ -161,7 +185,7 @@ class NIC(models.Model):
     memo = models.TextField(u'备注', blank=True)
     create_at = models.DateTimeField(blank=True, auto_now_add=True)
     update_at = models.DateTimeField(blank=True, auto_now=True)
-    server_info = models.ForeignKey('server')
+    server_info = models.ForeignKey('Server',on_delete=models.CASCADE)
     speed = models.CharField(max_length=64, null=True, blank=True, default='')
 
     class Meta:
@@ -183,7 +207,7 @@ class Disk(models.Model):
     memo = models.TextField(u'备注', blank=True)
     create_at = models.DateTimeField(blank=True, auto_now_add=True)
     update_at = models.DateTimeField(blank=True, auto_now=True)
-    server_info = models.ForeignKey('server')
+    server_info = models.ForeignKey('Server',on_delete=models.CASCADE)
 
     def __unicode__(self):
         return 'slot:%s size:%s' % (self.slot, self.capacity)
@@ -228,8 +252,8 @@ class Contract(models.Model):
 
 class BusinessUnit(models.Model):
     name = models.CharField(u'业务线', max_length=64, unique=True)
-    contact = models.ForeignKey('UserProfile')
-    user_group = models.ForeignKey('UserGroup', null=True, blank=True)
+    contact = models.ForeignKey('UserProfile',on_delete=models.CASCADE)
+    user_group = models.ForeignKey('UserGroup', null=True, blank=True,on_delete=models.CASCADE)
     memo = models.CharField(u'备注', max_length=64, blank=True)
 
     def __unicode__(self):
@@ -241,9 +265,9 @@ class BusinessUnit(models.Model):
 
 
 class HandleLog(models.Model):
-    asset_info = models.ForeignKey('Asset')
+    asset_info = models.ForeignKey('Asset',on_delete=models.CASCADE)
     content = models.TextField(null=True, blank=True)
-    creator = models.ForeignKey('UserProfile')
+    creator = models.ForeignKey('UserProfile',on_delete=models.CASCADE)
     create_at = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
@@ -278,7 +302,7 @@ class NewAssetApprovalZone(models.Model):
     data = models.TextField(u'资产数据')  # 这里才是真正详细的数据，批准后存入正式表里面
     date = models.DateTimeField(u'汇报日期', auto_now_add=True)
     approved = models.BooleanField(u'已批准', default=False)
-    approved_by = models.ForeignKey('UserProfile', verbose_name=u'批准人', blank=True, null=True)
+    approved_by = models.ForeignKey('UserProfile', verbose_name=u'批准人', blank=True, null=True,on_delete=models.CASCADE)
     approved_date = models.DateTimeField(u'批准日期', blank=True, null=True)
 
     def __str__(self):

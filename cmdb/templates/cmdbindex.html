@@ -1,0 +1,17 @@
+{% extends "bash.html" %}
+{% load i18n %}
+{% block content %}
+    <div id="content-wrapper">
+        <div class="container-fluid">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'new' %}">
+                        <button class="btn btn-primary">
+                            新建
+                        </button>
+                    </a>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}

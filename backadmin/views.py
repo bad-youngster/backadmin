@@ -9,6 +9,3 @@ def table(request):
 
 def test(request):
     return render(request,"test.html")
-
-def cmdbindex(request):
-    return render(request,"cmdbindex.html")

@@ -1,0 +1,11 @@
+{% extends "bash.html" %}
+{% load i18n %}
+{% block content %}
+    <form action="{% url 'devicestatus' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="name"/>
+        <input type="text" name="code"/>
+        <input type="text" name="memo">
+        <input type="submit" value="submit">
+    </form>
+{% endblock %}

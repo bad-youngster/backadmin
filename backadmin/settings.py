@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'appadmin',
     'rest_framework',
+    'cmdb',
 
 
 ]
