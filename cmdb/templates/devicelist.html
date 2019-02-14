@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "bash.html" %}
+{% load i18n %}
+{% block content %}
+    <div id="content-wrapper">
+        <div class="container-fluid">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'cmdb:new' %}">
+                        <button class="btn btn-primary">
+                            新建
+                        </button>
 
-</body>
-</html>
+                    </a>
+                </li>
+
+            </ol>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Data Table Example 12
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+{#                                <th>Age</th>#}
+{#                                <th>Start date</th>#}
+{#                                <th>Salary</th>#}
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+{#                                <th>Age</th>#}
+{#                                <th>Start date</th>#}
+{#                                <th>Salary</th>#}
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            {% for foo in status_list %}
+                                <tr>
+                                <td>{{ foo.name }}</td>
+                                <td>{{ foo.code }}</td>
+                                <td>{{ foo.memo }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

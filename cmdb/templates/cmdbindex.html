@@ -5,25 +5,58 @@
         <div class="container-fluid">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="{% url 'new' %}">
-                        <button class="btn btn-primary" onclick="popupfunc()">
+                    <a href="{% url 'cmdb:new' %}">
+                        <button class="btn btn-primary">
                             新建
                         </button>
+
                     </a>
                 </li>
+
             </ol>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Data Table Example 11
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+{#                                <th>Age</th>#}
+{#                                <th>Start date</th>#}
+{#                                <th>Salary</th>#}
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+{#                                <th>Age</th>#}
+{#                                <th>Start date</th>#}
+{#                                <th>Salary</th>#}
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            {% for foo in status_list %}
+                                <tr>
+                                <td>{{ foo.name }}</td>
+                                <td>{{ foo.code }}</td>
+                                <td>{{ foo.memo }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <script>
-        function popupfunc() {
-            window.open("{% url "new" %}","new","status=1,height:500,width:600,toolbar=0,resizeable=0")
-        }
-    
-        function p1_receive_func(data) {
-            var op = document.createElement("option");
-            op.innerHTML = data;
-            op.setAttribute("selected","selected");
-            document.getElementById("i1").appendChild(op);
-        }
-    </script>
 {% endblock %}

@@ -118,25 +118,46 @@
                 <a class="dropdown-item" href="blank.html">Blank Page</a>
             </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-fw fa-chart-area"></i>
-                <span>Charts</span></a>
+                <span>Charts</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                <a class="dropdown-item" href="{% url 'test' %}">chart</a>
+            </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'table' %}">
+         <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-fw fa-table"></i>
-                <span>Tables</span></a>
+                <span>Tables</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                <a class="dropdown-item" href="{% url 'table' %}">tables</a>
+            </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'test' %}">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-fw fa-cube"></i>
-                <span>Ansible</span></a>
+                <span>Ansible</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                <a class="dropdown-item" href="{% url 'test' %}">ansible</a>
+            </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'cmdbindex'%}">
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-fw fa-address-card"></i>
-                <span>CMDB</span></a>
+                <span>CMDB</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                <a class="dropdown-item" href="{% url 'cmdb:devicelist' %}">资产总表</a>
+            </div>
         </li>
     </ul>
     {% block content %}

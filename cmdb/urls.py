@@ -3,6 +3,7 @@ from django.conf.urls import url, include
 
 from cmdb.devicetype import views
 
+app_name = "cmdb"
 
 urlpatterns = [
     url(r'^$',views.cmdb,name="cmdbindex"),
