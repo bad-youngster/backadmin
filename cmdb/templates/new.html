@@ -1,7 +1,7 @@
 {% extends "bash.html" %}
 {% load i18n %}
 {% block content %}
-    <form action="{% url 'cmdb:cmdbindex' %}" method="post">
+    <form action="{% url 'cmdb:devicestatus' %}" method="post">
         {% csrf_token %}
         <input type="text" name="name"/>
         <input type="text" name="code"/>
@@ -13,7 +13,6 @@
         function firm() {
             if (confirm("are you surce?")) {
 
-                window.location.href="{% url 'cmdb:cmdbindex' %}"
 
             } else {
                 alert("cancel")

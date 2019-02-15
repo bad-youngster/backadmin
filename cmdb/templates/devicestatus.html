@@ -12,7 +12,25 @@
                 </li>
                 <li class="breadcrumb-item active">index</li>
             </ol>
-            <h3>提交成功</h3>
+            <a onclick="alter()">提交成功 ,3秒后跳转</a>
+            <a  onclick="go()"  id="count"></a>
+
         </div>
     </div>
+    <script>
+		onload=function(){
+			setInterval(go, 1000);
+		};
+		var x=3;
+		function go(){
+		x--;
+			if(x>0){
+
+			}else{
+			location.href='{% url "cmdb:devicelist" %}';
+			}
+		}
+
+    </script>
+
 {% endblock %}

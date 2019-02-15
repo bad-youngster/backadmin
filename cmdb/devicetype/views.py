@@ -23,6 +23,14 @@ def new(request):
 
 
 def insert(request):
+    if request.method == "GET":
+        return render(request,'devicelist.html')
+    if request.method == "POST":
+        name = request.POST.get("name", None)
+        code = request.POST.get("code", None)
+        memo = request.POST.get("memo", None)
+        statusadd = models.Status.objects.create(name=name, code=code, memo=memo)
+        statusadd.save()
     return render(request, 'devicestatus.html')
 
 
