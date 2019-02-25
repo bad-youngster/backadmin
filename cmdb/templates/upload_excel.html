@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>upload_excel</title>
+</head>
+<body>
+<div class="container">
+    <form action="{% url 'cmdb:excel_upload' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" style="width: 50%" name="excel_file" id="filename">
+        <button class="btn btn-primary radio " type="submit"> submit</button>
+    </form>
+
+</div>
+
+</body>
+</html>
